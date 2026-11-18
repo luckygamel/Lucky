@@ -365,11 +365,38 @@
           해상도 설정</a> <a href="#step04"><span class="toc-num">04</span> LD플레이어
           연동</a> <a href="#step05"><span class="toc-num">05</span> 운빨오토 실행</a>
         <a href="#step06"><span class="toc-num">06</span> 배치 기준 · 소환 규칙</a> </nav>
+      <!-- 유튜브 강제 자동재생 반응형 코드 시작 -->
       <div style="display: block !important; position: relative !important; width: 100% !important; max-width: 800px !important; margin: 24px auto !important; aspect-ratio: 16 / 9 !important; overflow: hidden !important; border-radius: 12px !important; background-color: #000 !important;">
-        <iframe src="https://www.youtube.com/embed/O-vivhQLQ3Q" style="display: block !important; position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; border: 0 !important; pointer-events: none !important;"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""> </iframe>
       </div>
+      <script>
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/embed/O-vivhQLQ3Q";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('yt-auto-player', {
+      videoId: 'O-vivhQLQ3Q',
+      playerVars: {
+        'autoplay': 1,        // 자동 재생
+        'mute': 1,            // 음소거 (자동 재생 필수 조건)
+        'controls': 0,        // 하단 컨트롤 바 숨김
+        'loop': 1,            // 반복 재생
+        'playlist': 'O-vivhQLQ3Q', // 반복 재생용 ID
+        'rel': 0,             // 관련 동영상 최소화
+        'modestbranding': 1,  // 로고 최소화
+        'playsinline': 1      // 모바일 인라인 재생
+      },
+      events: {
+        'onReady': function(event) {
+          event.target.mute();      // 브라우저 차단 우회를 위해 한 번 더 음소거 강제
+          event.target.playVideo(); // 강제 재생 실행
+        }
+      }
+    });
+  }
+</script><!-- 유튜브 강제 자동재생 반응형 코드 끝 -->
       <section id="step01" class="card">
         <div class="section-header"> <span class="step-badge">01</span>
           <h2>운빨오토 다운로드</h2>
