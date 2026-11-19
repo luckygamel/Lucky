@@ -804,5 +804,70 @@
     document.getElementById("event-layer-popup").style.display = "none";
   }
 </script><!-- 레이어 팝업 끝 -->
+    <!-- 방문자 카운터 -->
+    <div id="visitor-counter"> <span class="visitor-icon">👥</span> <span>누적
+        방문자</span> <strong id="visitor-count">집계 중...</strong> <span>명</span>
+    </div>
+    <style>
+  #visitor-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 35px auto 20px;
+    padding: 12px 20px;
+    width: fit-content;
+    border: 1px solid #e5e5e5;
+    border-radius: 30px;
+    background: #f8f9fa;
+    color: #666;
+    font-size: 13px;
+  }
+
+  #visitor-counter strong {
+    color: #333;
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .visitor-icon {
+    font-size: 16px;
+  }
+		</style>
+    <script>
+(async function () {
+  const API = "https://countapi.mileshilliard.com/api/v1";
+  const KEY = "luckygamel_lucky_unique_visitors_2026";
+  const STORAGE_KEY = "lucky_visitor_counted";
+
+  const display = document.getElementById("visitor-count");
+
+  try {
+    let response;
+
+    // 같은 브라우저에서 이미 방문한 경우 중복 집계하지 않음
+    if (localStorage.getItem(STORAGE_KEY) === "yes") {
+      response = await fetch(`${API}/get/${KEY}`);
+    } else {
+      response = await fetch(`${API}/hit/${KEY}`);
+
+      if (response.ok) {
+        localStorage.setItem(STORAGE_KEY, "yes");
+      }
+    }
+
+    if (!response.ok) throw new Error("Counter API error");
+
+    const data = await response.json();
+
+    display.textContent =
+      Number(data.value).toLocaleString("ko-KR");
+
+  } catch (error) {
+    display.textContent = "집계 오류";
+    console.error("방문자 카운터 오류:", error);
+  }
+})();
+		</script>
   </body>
 </html>
