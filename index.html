@@ -708,5 +708,45 @@
         </div>
       </section>
     </div>
+    <!-- 레이어 팝업 시작 -->
+    <div id="event-layer-popup" style="display: none; position: fixed; top: 80px; left: 50px; z-index: 99999; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); overflow: hidden; width: 360px; max-width: 90vw; border: 1px solid #e0e0e0;">
+      <!-- 배너 이미지 및 오픈채팅 링크 --> <a href="https://open.kakao.com/o/sDNllNXi" target="_blank"
+        rel="noopener noreferrer" style="display: block; line-height: 0;">
+        <!-- 이미지 경로를 실제 업로드하신 파일명이나 주소로 변경하세요 --> <img src="banner.png" alt="무료체험 추가제공 이벤트"
+          style="width: 100%; height: auto; display: block; border: 0;"> </a>
+      <!-- 하단 버튼 영역 (오늘 하루 보지 않기 / 닫기) -->
+      <div style="display: flex; justify-content: space-between; align-items: center; background-color: #222222; color: #ffffff; padding: 10px 15px; font-size: 13px; font-family: sans-serif;">
+        <label style="cursor: pointer; display: flex; align-items: center; gap: 6px; margin: 0; user-select: none;">
+          <input id="hide-today-chk" style="cursor: pointer; margin: 0;" type="checkbox">
+          <span>오늘 하루 보지 않기</span> </label> <button type="button" onclick="closeEventPopup()"
+          style="background: none; border: none; color: #ffffff; font-weight: bold; cursor: pointer; font-size: 13px; padding: 2px 6px;">
+          닫기 ✕ </button> </div>
+    </div>
+    <script>
+  // 페이지 로드 시 오늘 하루 보지 않기 설정 확인
+  document.addEventListener("DOMContentLoaded", function() {
+    const hideUntil = localStorage.getItem("hideEventPopupUntil");
+    const now = new Date().getTime();
+
+    // 저장된 시간이 없거나 현재 시간이 만료 시간을 지났다면 팝업 표시
+    if (!hideUntil || now > parseInt(hideUntil, 10)) {
+      document.getElementById("event-layer-popup").style.display = "block";
+    }
+  });
+
+  // 닫기 버튼 클릭 시 실행되는 함수
+  function closeEventPopup() {
+    const isChecked = document.getElementById("hide-today-chk").checked;
+    
+    // 체크박스가 선택되어 있다면 24시간 뒤의 타임스탬프를 저장
+    if (isChecked) {
+      const tomorrow = new Date().getTime() + (24 * 60 * 60 * 1000);
+      localStorage.setItem("hideEventPopupUntil", tomorrow.toString());
+    }
+    
+    // 팝업 숨김 처리
+    document.getElementById("event-layer-popup").style.display = "none";
+  }
+</script><!-- 레이어 팝업 끝 -->
   </body>
 </html>
